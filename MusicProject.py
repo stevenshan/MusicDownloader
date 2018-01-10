@@ -1,7 +1,9 @@
 import requests
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-import spotipy.util as util
+from YoutubeSearch import youtube_search
+#from oauth2client.tools import argparser
+import argparse
 
 trackList = []
 
@@ -19,11 +21,25 @@ results = sp.search(q = "album:" + album, type = "album")
 album_id = results['albums']['items'][0]['uri']
 tracks = sp.album_tracks(album_id)
 for x in tracks['items']:
-    print(x['name'])
+    trackList.append(x['name'])
 
 #Search the album dictionary for the artist uri
 artistURI = results['albums']['items'][0]['artists'][0]['uri']
 artist = results['albums']['items'][0]['artists'][0]['name']
 
+#Get youtube ids for each song
 
-#Get youtube links for each song
+for x in range(0,len(trackList)):
+    search = (artist+" "+album+" "+trackList[x])
+    #Searches for the videos and returns video id
+    if __name__ == "__main__":
+      parser = argparse.ArgumentParser()
+      parser.add_argument("--q", help="Search term", default=search)
+      parser.add_argument("--max-results", help="Max results", default=1)
+      args = parser.parse_args()
+    try:
+        youtube_search(args)
+    except (HttpError,e):
+        print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+
+#Take youtube ids and put them into a list. This will get the youtube urls for each video
