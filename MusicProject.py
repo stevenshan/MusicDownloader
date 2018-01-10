@@ -1,26 +1,31 @@
-#https://www.google.com/search?q=(Whatever your search)
-import urllib.request
-from bs4 import BeautifulSoup
-'''
-This works but google is ass at displaying stuff so the songs are not in order. I am going to use the spotify api
-artist = input("Artist: ")
+import requests
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
+import spotipy.util as util
+
+#User inputs for album and artists
+#artist = input("Artist: ")
+artist = "queen"
 album = input("Album: ")
-artist = artist.replace(' ','%20')
-album= album.replace(' ','%20')
 
-url = ("https://www.google.com/search?q="+artist+"%20"+album+"%20songs")
-#header is needed so that google thinks this is coming from a person not a machine
-#will error without declaring a header
-req =  urllib.request.Request(
-    url,
-    headers={
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36"
-    }
-)
+#token authorization
+client_id = "56fd49ba85c441919d120bae8c1cb7c5"
+client_secret = "78cf8ba2a5e545a3b4a8ff1c0a89f3da"
+client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+sp.trace = False
 
-pageFile = urllib.request.urlopen(req)
-pageHtml = pageFile.read()
-scraper = BeautifulSoup(pageHtml,'html.parser')
+#Album search to get the tracks on the albums
+results = sp.search(q = "album:" + album, type = "album")
+album_id = results['albums']['items'][0]['uri']
+tracks = sp.album_tracks(album_id)
+for x in tracks['items']:
+    print(x['name'])
 
-for y in scraper.find_all('span',class_="st"):
-    print(y.findAll("em"))'''
+#Search the album dictionary for the artist uri
+
+
+
+
+#The dictionary for albums has the artist uri. It can be found right after the
+#album uri almost. Get it from there.
