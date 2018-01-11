@@ -1,11 +1,15 @@
+from __future__ import unicode_literals
 import requests
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from YoutubeSearch import youtube_search
-#from oauth2client.tools import argparser
 import argparse
+import youtube_dl
+
+
 
 trackList = []
+idList = []
 
 #User inputs for album and artists
 album = input("Album: ")
@@ -38,8 +42,18 @@ for x in range(0,len(trackList)):
       parser.add_argument("--max-results", help="Max results", default=1)
       args = parser.parse_args()
     try:
-        youtube_search(args)
+        idList.append(youtube_search(args))
     except (HttpError,e):
         print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
 
-#Take youtube ids and put them into a list. This will get the youtube urls for each video
+#Take Youtube ids and download the mp3s for each song
+ydl_opts = {
+    'format': 'bestaudio/best',
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '192'}]
+        ,'outtmpl': 'C:/Users/Nick/Documents/GitHub/RandomProjects/downloadedsongs/%(title)s.%(ext)s',
+}
+with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+    ydl.download(['https://www.youtube.com/watch?v=fJ9rUzIMcZQ'])
