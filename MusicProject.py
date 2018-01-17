@@ -55,7 +55,6 @@ ydl_opts = {
         'preferredquality': '192'}]
         ,'outtmpl': 'C:/Users/Nick/Documents/GitHub/RandomProjects/downloadedsongs/%(title)s.%(ext)s',
 }
-with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-    ydl.download(['https://www.youtube.com/watch?v=KF6x7g5ZfwM'])
-
-#Find out how to install ffprobe because it does not want to install anywhere
+for x in range(0,len(idList)):
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        ydl.download(['https://www.youtube.com/watch?v='+idList[x][0]])
