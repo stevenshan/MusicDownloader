@@ -47,13 +47,15 @@ for x in range(0,len(trackList)):
         print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
 
 #Take Youtube ids and download the mp3s for each song
+filePath = "C:/Users/Nick/Music/Music/"+artist+"/"+album+"/"
+
 ydl_opts = {
     'format': 'bestaudio/best',
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
         'preferredquality': '192'}]
-        ,'outtmpl': 'C:/Users/Nick/Documents/GitHub/RandomProjects/downloadedsongs/%(title)s.%(ext)s',
+        ,'outtmpl': filePath+'%(title)s.%(ext)s',
 }
 for x in range(0,len(idList)):
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
