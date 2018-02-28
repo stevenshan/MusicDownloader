@@ -4,5 +4,5 @@
 
 # Directories #
 ###############
-dir_to_exclude/downloadedsongs
+/downloadedsongs/*
 dir_to_exclude/GoogleReference.py
