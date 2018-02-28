@@ -14,8 +14,8 @@ idList = []
 album = input("Album: ")
 
 #token authorization
-client_id = "Client token here"
-client_secret = "Secret Token here"
+client_id = "Spotify Client Id"
+client_secret = "Spotify Client Secret"
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
