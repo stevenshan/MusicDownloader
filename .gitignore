@@ -1,6 +1,8 @@
 # Files #
 ###################
 *.json
+.cache-ducttapeman12
+GoogleReference.py
 
 # Directories #
 ###############
