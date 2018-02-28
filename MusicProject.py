@@ -10,7 +10,6 @@ import youtube_dl
 
 trackList = []
 idList = []
-
 #User inputs for album and artists
 album = input("Album: ")
 

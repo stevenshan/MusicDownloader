@@ -1,0 +1,8 @@
+# Files #
+###################
+*.json
+
+# Directories #
+###############
+dir_to_exclude/downloadedsongs
+dir_to_exclude/GoogleReference.py
