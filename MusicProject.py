@@ -6,14 +6,14 @@ from YoutubeSearch import youtube_search
 import argparse
 import youtube_dl
 
-
-
 trackList = []
 idList = []
 #User inputs for album and artists
 album = input("Album: ")
 
 #token authorization
+client_id = "56fd49ba85c441919d120bae8c1cb7c5"
+client_secret = "78cf8ba2a5e545a3b4a8ff1c0a89f3da"
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
@@ -57,3 +57,6 @@ ydl_opts = {
 for x in range(0,len(idList)):
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download(['https://www.youtube.com/watch?v='+idList[x][0]])
+
+#Used to edit the metadata of the mp3s for name artist and album
+#Do something here
