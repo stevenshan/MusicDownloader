@@ -38,11 +38,10 @@ def youtube_search(options):
                 search_result["id"]["playlistId"])
             )
 
-  return(videos)
+    return(videos)
 
-  #print ("Channels:\n", "\n".join(channels), "\n")
-  #print ("Playlists:\n", "\n".join(playlists), "\n")
-
+    #print ("Channels:\n", "\n".join(channels), "\n")
+    #print ("Playlists:\n", "\n".join(playlists), "\n")
 
 if __name__ == "__main__":
     argparser.add_argument("--q", help="Search term", default="Programming")

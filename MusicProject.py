@@ -10,8 +10,7 @@ import config
 trackList = []
 idList = []
 #User inputs for album and artists
-album = input("Album: ")
-
+album = input("Album: ") 
 #token authorization
 client_credentials_manager = SpotifyClientCredentials(
         client_id=config.Spotify.CLIENT_ID,
