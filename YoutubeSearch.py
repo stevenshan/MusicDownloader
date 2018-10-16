@@ -30,18 +30,23 @@ def youtube_search(options):
     # matching videos, channels, and playlists.
     for search_result in search_response.get("items", []):
         count += 1
-        if search_result["id"]["kind"] == "youtube#video":
-            videos.append("%s" % (search_result["id"]["videoId"]))
-        elif search_result["id"]["kind"] == "youtube#channel":
-            channels.append("%s (%s)" % (
-                search_result["snippet"]["title"],
-                search_result["id"]["channelId"])
-            )
-        elif search_result["id"]["kind"] == "youtube#playlist":
-            playlists.append("%s (%s)" % (
-                search_result["snippet"]["title"],
-                search_result["id"]["playlistId"])
-            )
+        try:
+            kind = search_result["id"]["kind"]
+        except KeyError:
+            pass
+        else:
+            if kind == "youtube#video":
+                videos.append("%s" % (search_result["id"]["videoId"]))
+            elif kind == "youtube#channel":
+                channels.append("%s (%s)" % (
+                    search_result["snippet"]["title"],
+                    search_result["id"]["channelId"])
+                )
+            elif kind == "youtube#playlist":
+                playlists.append("%s (%s)" % (
+                    search_result["snippet"]["title"],
+                    search_result["id"]["playlistId"])
+                )
 
     print("Search returned %d items." % count)
 
