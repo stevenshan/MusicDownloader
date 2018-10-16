@@ -4,6 +4,9 @@ from oauth2client.tools import argparser
 import config
 
 def youtube_search(options):
+
+    print("Starting Youtube search...")
+
     youtube = build(
         config.Youtube.SERVICE_NAME,
         config.Youtube.VERSION,
@@ -22,9 +25,11 @@ def youtube_search(options):
     channels = []
     playlists = []
 
+    count = 0
     # Add each result to the appropriate list, and then display the lists of
     # matching videos, channels, and playlists.
     for search_result in search_response.get("items", []):
+        count += 1
         if search_result["id"]["kind"] == "youtube#video":
             videos.append("%s" % (search_result["id"]["videoId"]))
         elif search_result["id"]["kind"] == "youtube#channel":
@@ -37,6 +42,8 @@ def youtube_search(options):
                 search_result["snippet"]["title"],
                 search_result["id"]["playlistId"])
             )
+
+    print("Search returned %d items." % count)
 
     return(videos)
 
