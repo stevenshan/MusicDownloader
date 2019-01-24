@@ -5,16 +5,16 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from YoutubeSearch import youtube_search
 import argparse
 import youtube_dl
+import config
 
 trackList = []
 idList = []
 #User inputs for album and artists
 album = input("Album: ")
-
 #token authorization
-client_id = "56fd49ba85c441919d120bae8c1cb7c5"
-client_secret = "78cf8ba2a5e545a3b4a8ff1c0a89f3da"
-client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+client_credentials_manager = SpotifyClientCredentials(
+        client_id=config.Spotify.CLIENT_ID,
+        client_secret=config.Spotify.CLIENT_SECRET)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 #Album search to get the tracks on the albums
@@ -38,25 +38,36 @@ for x in range(0,len(trackList)):
       parser.add_argument("--q", help="Search term", default=search)
       parser.add_argument("--max-results", help="Max results", default=1)
       args = parser.parse_args()
+
     try:
         idList.append(youtube_search(args))
     except (HttpError,e):
         print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
 
 #Take Youtube ids and download the mp3s for each song
-filePath = "C:/Users/Nick/Music/Music/"+artist+"/"+album+"/"
+filePath = config.SAVE_LOCATION % (artist, album)
 
 ydl_opts = {
     'format': 'bestaudio/best',
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
-        'preferredquality': '192'}]
-        ,'outtmpl': filePath+'%(title)s.%(ext)s',
+        'preferredquality': '192'
+    }],
+    'outtmpl': filePath+'%(title)s.%(ext)s',
 }
+
+print("Downloading Youtube music...")
+print("%s / %s complete" %
+      (str(0).ljust(3), str(len(idList)).ljust(3)), end='\r')
+
 for x in range(0,len(idList)):
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download(['https://www.youtube.com/watch?v='+idList[x][0]])
+    print("%s / %s complete" %
+          (str(x).ljust(3), str(len(idList)).ljust(3)), end='\r')
+
+print("\nDone downloading.")
 
 #Used to edit the metadata of the mp3s for name artist and album
 #Do something here
