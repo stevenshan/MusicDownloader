@@ -10,7 +10,7 @@ songs from the album will appear in the specified destination folder.
 When developing this program, I used a few different APIs and libraries included for python.
 Once the album is typed in, it is first ran through Spotifys web API to find a list
 of all of the tracks on the requested album. To easily use the Spotify API, I used an
-avaliable python shell called Spotipy. Then once I got the tracks, I used the search function
+avaliable python shell called Spotify. Then once I got the tracks, I used the search function
 in googles Youtube data API. This allowed for me to get Youtube video ids for each of the songs.
 After this was done I then used Youtube-dl library to download the mp3 files off of each of the
 videos. All of these downloads currently end up in a destination folder hierarchy of the artist,
